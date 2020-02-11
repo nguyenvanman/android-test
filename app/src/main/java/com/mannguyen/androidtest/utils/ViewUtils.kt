@@ -1,8 +1,11 @@
 package com.mannguyen.androidtest.utils
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
 import com.mannguyen.androidtest.R
 
@@ -12,6 +15,14 @@ fun View.loadImage() {
 
 fun View.hide() {
     visibility = View.GONE
+}
+
+fun AppCompatTextView.setTextFromHtml(html: String?) {
+    text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(html ?: "", Html.FROM_HTML_MODE_COMPACT)
+    } else {
+        Html.fromHtml(html ?: "")
+    }
 }
 
 fun ImageView.loadImage(context: Context, imageUrl: String?) {

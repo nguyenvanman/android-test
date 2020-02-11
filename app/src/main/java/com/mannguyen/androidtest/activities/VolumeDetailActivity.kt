@@ -8,6 +8,7 @@ import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 import com.mannguyen.androidtest.utils.hide
 import com.mannguyen.androidtest.utils.loadImage
+import com.mannguyen.androidtest.utils.setTextFromHtml
 import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.synthetic.main.activity_volume_detail.*
 
@@ -94,7 +95,7 @@ class VolumeDetailActivity : AppCompatActivity() {
         bookVolume.volumeInfo?.apply {
             imgThumbnail.loadImage(this@VolumeDetailActivity, imageLinks?.highestQualityUrl()?.toHttps())
             tvTitle.text = title
-            tvDescription.text = description
+            tvDescription.setTextFromHtml(description)
             tvPublisher.text = String.format(getString(R.string.publish_info), publisher, publishDate)
             tvAuthors.text = String.format(getString(R.string.authors), authors.joinToString())
         }

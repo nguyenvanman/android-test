@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.utils.loadImage
+import com.mannguyen.androidtest.utils.setTextFromHtml
 import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_volume.*
@@ -29,7 +30,7 @@ class VolumeViewHolder(override val containerView: View?) :
     private fun display() {
         bookVolume?.volumeInfo?.apply {
             tvTitle.text = title
-            tvDescription.text = description
+            tvDescription.setTextFromHtml(description)
             imgThumbnail.loadImage(itemView.context, imageLinks?.smallThumbnail?.toHttps())
         }
     }
