@@ -1,15 +1,14 @@
 package com.mannguyen.androidtest.activities
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.adapters.VolumesAdapter
-import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 import com.mannguyen.androidtest.utils.hide
 import com.mannguyen.androidtest.utils.show
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +22,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        adapter = VolumesAdapter(this)
+        adapter = VolumesAdapter(this).apply {
+            onLoadMoreError = {
+                toast(it.message.toString())
+            }
+        }
+
         rvVolumes.layoutManager = LinearLayoutManager(this)
         rvVolumes.adapter = adapter
 
@@ -36,6 +40,10 @@ class MainActivity : AppCompatActivity() {
                     hideLoading()
                 }
             )
+        }
+
+        rvVolumes.onScrolledToBottom {
+            adapter.loadMore()
         }
     }
 

@@ -5,16 +5,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mannguyen.androidtest.R
+import com.mannguyen.androidtest.adapters.holders.LoadingViewHolder
 import com.mannguyen.androidtest.adapters.holders.VolumeViewHolder
 import com.mannguyen.androidtest.models.BookVolume
+import com.mannguyen.androidtest.models.Loading
+import com.mannguyen.androidtest.models.bases.BaseListItem
 import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 
 
 class VolumesAdapter(
     private val context: Context,
-    private val items: MutableList<BookVolume> = mutableListOf()
+    private val items: MutableList<BaseListItem> = mutableListOf()
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var isLoadingMore = false
+
+    var onLoadMoreError: ((Throwable) -> Unit)? = null
 
     private fun addData(input: MutableList<BookVolume>?) {
         items.addAll(input ?: mutableListOf())
@@ -43,11 +50,52 @@ class VolumesAdapter(
         )
     }
 
+    fun loadMore() {
+        if (!isLoadingMore) {
+            showLoadMoreItem()
+            VolumeDataSource.nextPage(
+                onSuccess = {
+                    hideLoadMoreItem()
+                    addData(it?.items)
+                },
+                onError = {
+                    hideLoadMoreItem()
+                    onLoadMoreError?.invoke(it)
+                }
+            )
+        }
+    }
+
+    private fun showLoadMoreItem() {
+        if (!isLoadingMore) {
+            isLoadingMore = true
+            items.add(Loading())
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun hideLoadMoreItem() {
+        if (isLoadingMore) {
+            isLoadingMore = false
+            items.removeAt(items.size - 1)
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return items[position].getType()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_volume, parent, false)
-        return VolumeViewHolder(view).apply {
-            onClick = this@VolumesAdapter::onItemClick
+        return if (viewType == BaseListItem.ItemTypes.TYPE_NORMAL_ITEM) {
+            val view = layoutInflater.inflate(R.layout.item_volume, parent, false)
+            VolumeViewHolder(view).apply {
+                onClick = this@VolumesAdapter::onItemClick
+            }
+        } else {
+            val view = layoutInflater.inflate(R.layout.item_loading, parent, false)
+            LoadingViewHolder(view)
         }
     }
 
@@ -59,7 +107,9 @@ class VolumesAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as VolumeViewHolder).bookVolume = items[position]
+        if (holder.itemViewType == BaseListItem.ItemTypes.TYPE_NORMAL_ITEM) {
+            (holder as VolumeViewHolder).bookVolume = items[position] as BookVolume
+        }
     }
 
 }
