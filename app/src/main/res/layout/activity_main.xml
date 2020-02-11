@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    android:orientation="vertical"
+    android:padding="@dimen/horizontal_padding">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.mannguyen.androidtest.widgets.SearchingEditText
+        android:id="@+id/edtQuery"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:hint="@string/edit_text_search_book_volume_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingStart="@dimen/horizontal_padding"
+        android:paddingTop="@dimen/vertical_padding"
+        android:paddingEnd="@dimen/horizontal_padding"
+        android:paddingBottom="@dimen/vertical_padding" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/vertical_margin">
+
+        <com.mannguyen.androidtest.widgets.CustomRecyclerView
+            android:id="@+id/rvBookVolumes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:id="@+id/vCover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="@dimen/loading_progress_bar_size"
+            android:layout_height="@dimen/loading_progress_bar_size"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>
