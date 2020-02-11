@@ -7,7 +7,7 @@ import com.mannguyen.androidtest.constants.IntentKeys
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 import com.mannguyen.androidtest.utils.hide
-import com.mannguyen.androidtest.utils.show
+import com.mannguyen.androidtest.utils.loadImage
 import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.synthetic.main.activity_volume_detail.*
 
@@ -81,18 +81,18 @@ class VolumeDetailActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         content.hide()
-        tvError.show()
+        tvError.loadImage()
         tvError.text = message
     }
 
     private fun hideError() {
-        content.show()
+        content.loadImage()
         tvError.hide()
     }
 
     private fun display(bookVolume: BookVolume?) {
         bookVolume?.volumeInfo?.apply {
-            imgThumbnail.show(this@VolumeDetailActivity, imageLinks?.highestQualityUrl()?.toHttps())
+            imgThumbnail.loadImage(this@VolumeDetailActivity, imageLinks?.highestQualityUrl()?.toHttps())
             tvTitle.text = title
             tvDescription.text = description
             tvPublisher.text = String.format(getString(R.string.publish_info), publisher, publishDate)

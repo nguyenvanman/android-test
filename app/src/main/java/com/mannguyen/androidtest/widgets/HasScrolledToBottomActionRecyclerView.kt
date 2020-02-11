@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomRecyclerView : RecyclerView {
+class HasScrolledToBottomActionRecyclerView : RecyclerView {
 
     constructor(context: Context) : super(context)
 

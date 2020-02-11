@@ -5,7 +5,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 
-fun Context.loadingDrawable(): CircularProgressDrawable {
+fun Context.createLoadingDrawable(): CircularProgressDrawable {
     return CircularProgressDrawable(this).apply {
         strokeWidth = 5f
         centerRadius = 20f
@@ -13,7 +13,7 @@ fun Context.loadingDrawable(): CircularProgressDrawable {
     }
 }
 
-fun Context.hideKeyboard(view: View) {
-    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+fun View.hideKeyboard() {
+    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

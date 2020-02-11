@@ -22,16 +22,16 @@ class VolumesAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var isLoadingMore = false
+    private var isLoadingMore = false
 
     var onLoadMoreError: ((String?) -> Unit)? = null
 
-    private fun addData(input: MutableList<BookVolume>?) {
-        items.addAll(input ?: mutableListOf())
+    private fun addData(input: MutableList<BookVolume>) {
+        items.addAll(input)
         notifyDataSetChanged()
     }
 
-    private fun setData(input: MutableList<BookVolume>?) {
+    private fun setData(input: MutableList<BookVolume>) {
         items.clear()
         addData(input)
     }
@@ -47,7 +47,9 @@ class VolumesAdapter(
             query = query,
             onSuccess = {
                 onCompleted?.invoke()
-                setData(it?.items)
+                it?.items?.let { data ->
+                   setData(data)
+                }
             },
             onError = onError
         )
@@ -59,7 +61,9 @@ class VolumesAdapter(
             VolumeDataSource.nextPage(
                 onSuccess = {
                     hideLoadMoreItem()
-                    addData(it?.items)
+                    it?.items?.let { data ->
+                        addData(data)
+                    }
                 },
                 onError = {
                     hideLoadMoreItem()

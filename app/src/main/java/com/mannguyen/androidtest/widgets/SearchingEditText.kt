@@ -14,7 +14,7 @@ class SearchingEditText : AppCompatEditText {
 
     fun onActionSearch(onSearch: ((String) -> Unit)? = null) {
         setOnEditorActionListener { v, actionId, _ ->
-            context.hideKeyboard(v)
+            hideKeyboard()
 
             val query = v.text.toString()
 

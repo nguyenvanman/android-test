@@ -2,33 +2,29 @@ package com.mannguyen.androidtest.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.adapters.VolumesAdapter
 import com.mannguyen.androidtest.utils.hide
-import com.mannguyen.androidtest.utils.show
+import com.mannguyen.androidtest.utils.loadImage
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter: VolumesAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        init()
+        initialize()
     }
 
-    private fun init() {
-        adapter = VolumesAdapter(this).apply {
+    private fun initialize() {
+        val adapter = VolumesAdapter(this).apply {
             onLoadMoreError = {
                 toast(it.toString())
             }
         }
 
-        rvVolumes.layoutManager = LinearLayoutManager(this)
         rvVolumes.adapter = adapter
 
         edtQuery.onActionSearch { query ->
@@ -52,8 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        pbLoading.show()
-        vCover.show()
+        pbLoading.loadImage()
+        vCover.loadImage()
     }
 
     private fun hideLoading() {
@@ -63,12 +59,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         rvVolumes.hide()
-        tvError.show()
+        tvError.loadImage()
         tvError.text = message
     }
 
     private fun hideError() {
-        rvVolumes.show()
+        rvVolumes.loadImage()
         tvError.hide()
     }
 
