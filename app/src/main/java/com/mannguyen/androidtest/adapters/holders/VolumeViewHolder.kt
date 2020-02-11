@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.utils.loadImage
 import com.mannguyen.androidtest.utils.setTextFromHtml
-import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_volume.*
 
@@ -31,7 +30,7 @@ class VolumeViewHolder(override val containerView: View?) :
         bookVolume?.volumeInfo?.apply {
             tvTitle.text = title
             tvDescription.setTextFromHtml(description)
-            imgThumbnail.loadImage(itemView.context, imageLinks?.smallThumbnail?.toHttps())
+            imgThumbnail.loadImage(itemView.context, imageLinks?.smallThumbnail)
         }
     }
 }

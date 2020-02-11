@@ -9,7 +9,6 @@ import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 import com.mannguyen.androidtest.utils.hide
 import com.mannguyen.androidtest.utils.loadImage
 import com.mannguyen.androidtest.utils.setTextFromHtml
-import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.synthetic.main.activity_volume_detail.*
 
 class VolumeDetailActivity : AppCompatActivity() {
@@ -93,7 +92,7 @@ class VolumeDetailActivity : AppCompatActivity() {
 
     private fun display(bookVolume: BookVolume) {
         bookVolume.volumeInfo?.apply {
-            imgThumbnail.loadImage(this@VolumeDetailActivity, imageLinks?.highestQualityUrl()?.toHttps())
+            imgThumbnail.loadImage(this@VolumeDetailActivity, imageLinks?.highestQualityUrl())
             tvTitle.text = title
             tvDescription.setTextFromHtml(description)
             tvPublisher.text = String.format(getString(R.string.publish_info), publisher, publishDate)
