@@ -24,7 +24,7 @@ class VolumesAdapter(
 
     var isLoadingMore = false
 
-    var onLoadMoreError: ((Throwable) -> Unit)? = null
+    var onLoadMoreError: ((String?) -> Unit)? = null
 
     private fun addData(input: MutableList<BookVolume>?) {
         items.addAll(input ?: mutableListOf())
@@ -40,7 +40,7 @@ class VolumesAdapter(
         query: String,
         onStart: (() -> Unit)? = null,
         onCompleted: (() -> Unit)? = null,
-        onError: ((Throwable) -> Unit)? = null
+        onError: ((String?) -> Unit)? = null
     ) {
         onStart?.invoke()
         VolumeDataSource.searchVolumes(

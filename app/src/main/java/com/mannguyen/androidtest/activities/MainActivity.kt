@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         adapter = VolumesAdapter(this).apply {
             onLoadMoreError = {
-                toast(it.message.toString())
+                toast(it.toString())
             }
         }
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 },
                 onError = {
                     hideLoading()
-                    showError(it.message.toString())
+                    showError(it.toString())
                 }
             )
         }

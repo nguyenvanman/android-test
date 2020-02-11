@@ -3,6 +3,7 @@ package com.mannguyen.androidtest.services.datasources
 import android.annotation.SuppressLint
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.models.BookVolumes
+import com.mannguyen.androidtest.services.ApiService
 import com.mannguyen.androidtest.services.implementations.VolumeService
 
 object VolumeDataSource {
@@ -14,32 +15,36 @@ object VolumeDataSource {
     var currentPage = 0
 
     private fun getVolumes(
-        onError: ((Throwable) -> Unit)? = null,
+        onError: ((String?) -> Unit)? = null,
         onSuccess: ((BookVolumes?) -> Unit)? = null
     ) {
         currentQuery?.apply {
-            VolumeService.getVolumes(this, currentPage * maxResults, maxResults)
-                ?.subscribe({
-                    onSuccess?.invoke(it.body())
-                }, onError)
+            val observable = VolumeService.getVolumes(this, currentPage * maxResults, maxResults)
+            ApiService.call(
+                observable = observable,
+                onSuccess = onSuccess,
+                onError = onError
+            )
         }
     }
 
     @SuppressLint("CheckResult")
     fun getVolume(
         volumeId: String,
-        onError: ((Throwable) -> Unit)? = null,
+        onError: ((String?) -> Unit)? = null,
         onSuccess: ((BookVolume?) -> Unit)? = null
     ) {
-        VolumeService.getVolume(volumeId)
-            ?.subscribe({
-                onSuccess?.invoke(it.body())
-            }, onError)
+        val observable = VolumeService.getVolume(volumeId)
+        ApiService.call(
+            observable = observable,
+            onSuccess = onSuccess,
+            onError = onError
+        )
     }
 
     fun searchVolumes(
         query: String,
-        onError: ((Throwable) -> Unit)? = null,
+        onError: ((String?) -> Unit)? = null,
         onSuccess: ((BookVolumes?) -> Unit)? = null
     ) {
         if (query.isNotEmpty()) {
@@ -53,7 +58,7 @@ object VolumeDataSource {
     }
 
     fun nextPage(
-        onError: ((Throwable) -> Unit)? = null,
+        onError: ((String?) -> Unit)? = null,
         onSuccess: ((BookVolumes?) -> Unit)? = null
     ) {
         currentPage++

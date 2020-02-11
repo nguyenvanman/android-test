@@ -52,7 +52,7 @@ class VolumeDetailActivity : AppCompatActivity() {
                 },
                 onError = {
                     hideLoading()
-                    showError(it.message.toString())
+                    showError(it.toString())
                 }
             )
         }
