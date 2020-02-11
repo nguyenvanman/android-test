@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
+import com.mannguyen.androidtest.utils.hideKeyboard
 
 class SearchingEditText : AppCompatEditText {
 
@@ -13,6 +14,8 @@ class SearchingEditText : AppCompatEditText {
 
     fun onActionSearch(onSearch: ((String) -> Unit)? = null) {
         setOnEditorActionListener { v, actionId, _ ->
+            context.hideKeyboard(v)
+
             val query = v.text.toString()
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH && query.isNotEmpty()) {
