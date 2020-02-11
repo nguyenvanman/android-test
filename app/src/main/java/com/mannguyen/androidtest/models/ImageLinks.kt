@@ -9,4 +9,8 @@ data class ImageLinks(
     @SerializedName("medium") val medium: String? = null,
     @SerializedName("large") val large: String? = null,
     @SerializedName("extraLarge") val extraLarge: String? = null
-)
+) {
+    fun highestQualityUrl() : String? {
+        return extraLarge ?: large ?: medium ?: small ?: thumbnail ?: smallThumbnail
+    }
+}
