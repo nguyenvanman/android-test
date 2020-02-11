@@ -82,7 +82,7 @@ class VolumesAdapter(
     private fun hideLoadMoreItem() {
         if (isLoadingMore) {
             isLoadingMore = false
-            items.dropLast(1)
+            items.removeAt(items.size - 1)
             notifyDataSetChanged()
         }
     }
