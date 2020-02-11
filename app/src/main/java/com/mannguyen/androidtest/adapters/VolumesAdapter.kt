@@ -1,12 +1,15 @@
 package com.mannguyen.androidtest.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mannguyen.androidtest.R
+import com.mannguyen.androidtest.activities.VolumeDetailActivity
 import com.mannguyen.androidtest.adapters.holders.LoadingViewHolder
 import com.mannguyen.androidtest.adapters.holders.VolumeViewHolder
+import com.mannguyen.androidtest.constants.IntentKeys
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.models.Loading
 import com.mannguyen.androidtest.models.bases.BaseListItem
@@ -100,6 +103,11 @@ class VolumesAdapter(
     }
 
     private fun onItemClick(bookVolume: BookVolume?) {
+        val intent = Intent(context, VolumeDetailActivity::class.java).apply {
+            putExtra(IntentKeys.VolumeId, bookVolume?.id)
+        }
+
+        context.startActivity(intent)
     }
 
     override fun getItemCount(): Int {
