@@ -22,6 +22,8 @@ class VolumesAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var onItemClick: ((BookVolume?) -> Unit)? = null
+
     private var isLoadingMore = false
 
     var onLoadMoreError: ((String?) -> Unit)? = null
@@ -94,20 +96,12 @@ class VolumesAdapter(
         return if (viewType == BaseListItem.ItemTypes.TYPE_NORMAL_ITEM) {
             val view = layoutInflater.inflate(R.layout.item_volume, parent, false)
             VolumeViewHolder(view).apply {
-                onClick = this@VolumesAdapter::onItemClick
+                onClick = this@VolumesAdapter.onItemClick
             }
         } else {
             val view = layoutInflater.inflate(R.layout.item_loading, parent, false)
             LoadingViewHolder(view)
         }
-    }
-
-    private fun onItemClick(bookVolume: BookVolume?) {
-        val intent = Intent(context, VolumeDetailActivity::class.java).apply {
-            putExtra(IntentKeys.VolumeId, bookVolume?.id)
-        }
-
-        context.startActivity(intent)
     }
 
     override fun getItemCount(): Int {

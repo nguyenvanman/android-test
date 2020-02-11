@@ -1,9 +1,11 @@
 package com.mannguyen.androidtest.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.adapters.VolumesAdapter
+import com.mannguyen.androidtest.constants.IntentKeys
 import com.mannguyen.androidtest.utils.hide
 import com.mannguyen.androidtest.utils.loadImage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +24,14 @@ class MainActivity : AppCompatActivity() {
         val adapter = VolumesAdapter(this).apply {
             onLoadMoreError = {
                 toast(it.toString())
+            }
+
+            onItemClick = { bookVolume ->
+                val intent = Intent(this@MainActivity, VolumeDetailActivity::class.java).apply {
+                    putExtra(IntentKeys.VolumeId, bookVolume?.id)
+                }
+
+                startActivity(intent)
             }
         }
 
