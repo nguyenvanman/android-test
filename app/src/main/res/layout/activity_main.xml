@@ -8,6 +8,8 @@
 
     <com.mannguyen.androidtest.widgets.SearchingEditText
         android:id="@+id/edtQuery"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/medium_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
