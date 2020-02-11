@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.adapters.holders.VolumeViewHolder
 import com.mannguyen.androidtest.models.BookVolume
+import com.mannguyen.androidtest.services.datasources.VolumeDataSource
 
 
-class VolumesAdapter(private val context: Context, private val items: MutableList<BookVolume> = mutableListOf()) :
+class VolumesAdapter(
+    private val context: Context,
+    private val items: MutableList<BookVolume> = mutableListOf()
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun addData(input: MutableList<BookVolume>?) {
@@ -17,9 +21,26 @@ class VolumesAdapter(private val context: Context, private val items: MutableLis
         notifyDataSetChanged()
     }
 
-    fun setData(input: MutableList<BookVolume>?) {
+    private fun setData(input: MutableList<BookVolume>?) {
         items.clear()
         addData(input)
+    }
+
+    fun search(
+        query: String,
+        onStart: (() -> Unit)? = null,
+        onCompleted: (() -> Unit)? = null,
+        onError: ((Throwable) -> Unit)? = null
+    ) {
+        onStart?.invoke()
+        VolumeDataSource.searchVolumes(
+            query = query,
+            onSuccess = {
+                onCompleted?.invoke()
+                setData(it?.items)
+            },
+            onError = onError
+        )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
