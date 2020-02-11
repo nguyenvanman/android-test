@@ -35,9 +35,13 @@ class MainActivity : AppCompatActivity() {
             adapter.search(
                 query = query,
                 onStart = this@MainActivity::showLoading,
-                onCompleted = this@MainActivity::hideLoading,
+                onCompleted = {
+                    hideLoading()
+                    hideError()
+                },
                 onError = {
                     hideLoading()
+                    showError(it.message.toString())
                 }
             )
         }
@@ -55,6 +59,17 @@ class MainActivity : AppCompatActivity() {
     private fun hideLoading() {
         pbLoading.hide()
         vCover.hide()
+    }
+
+    private fun showError(message: String) {
+        rvVolumes.hide()
+        tvError.show()
+        tvError.text = message
+    }
+
+    private fun hideError() {
+        rvVolumes.show()
+        tvError.hide()
     }
 
 }
