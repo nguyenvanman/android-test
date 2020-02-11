@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.models.BookVolume
 import com.mannguyen.androidtest.utils.show
+import com.mannguyen.androidtest.utils.toHttps
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_volume.*
 
@@ -32,7 +33,7 @@ class VolumeViewHolder(override val containerView: View?) :
         bookVolume?.volumeInfo?.apply {
             tvTitle.text = title
             tvDescription.text = description
-            imgThumbnail.show(itemView.context, imageLinks?.smallThumbnail?.replace("http", "https"))
+            imgThumbnail.show(itemView.context, imageLinks?.smallThumbnail?.toHttps())
         }
     }
 }
