@@ -3,4 +3,6 @@
     <string name="edit_text_search_book_volume_hint">Book volume</string>
     <string name="publish_info">Published by %s on %s</string>
     <string name="authors">Authors: %s</string>
+    <string name="screen_volume_detail_title">Book Volume Detail</string>
+    <string name="screen_book_volumes_search_title">Book Volumes Search</string>
 </resources>
