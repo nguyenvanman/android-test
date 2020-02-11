@@ -1,7 +1,8 @@
-package com.mannguyen.androidtest
+package com.mannguyen.androidtest.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mannguyen.androidtest.R
 
 class MainActivity : AppCompatActivity() {
 
