@@ -29,11 +29,22 @@ class VolumeDetailActivity : AppCompatActivity() {
     }
 
     private fun initialize() {
+        supportActionBar?.apply {
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
+
         refreshLayout.setOnRefreshListener {
             if (!isLoading) {
                 getVolume()
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+
+        return true
     }
 
     private fun getDataFromIntent() {
