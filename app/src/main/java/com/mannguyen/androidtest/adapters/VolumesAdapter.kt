@@ -47,9 +47,7 @@ class VolumesAdapter(
             query = query,
             onSuccess = {
                 onCompleted?.invoke()
-                it?.items?.let { data ->
-                   setData(data)
-                }
+                setData(it.items)
             },
             onError = onError
         )
@@ -61,9 +59,7 @@ class VolumesAdapter(
             VolumeDataSource.nextPage(
                 onSuccess = {
                     hideLoadMoreItem()
-                    it?.items?.let { data ->
-                        addData(data)
-                    }
+                    addData(it.items)
                 },
                 onError = {
                     hideLoadMoreItem()
@@ -84,7 +80,7 @@ class VolumesAdapter(
     private fun hideLoadMoreItem() {
         if (isLoadingMore) {
             isLoadingMore = false
-            items.removeAt(items.size - 1)
+            items.dropLast(1)
             notifyDataSetChanged()
         }
     }

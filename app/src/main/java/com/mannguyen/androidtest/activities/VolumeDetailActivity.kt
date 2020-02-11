@@ -90,8 +90,8 @@ class VolumeDetailActivity : AppCompatActivity() {
         tvError.hide()
     }
 
-    private fun display(bookVolume: BookVolume?) {
-        bookVolume?.volumeInfo?.apply {
+    private fun display(bookVolume: BookVolume) {
+        bookVolume.volumeInfo?.apply {
             imgThumbnail.loadImage(this@VolumeDetailActivity, imageLinks?.highestQualityUrl()?.toHttps())
             tvTitle.text = title
             tvDescription.text = description

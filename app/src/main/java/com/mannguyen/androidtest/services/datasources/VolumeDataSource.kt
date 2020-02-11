@@ -16,7 +16,7 @@ object VolumeDataSource {
 
     private fun getVolumes(
         onError: ((String?) -> Unit)? = null,
-        onSuccess: ((BookVolumes?) -> Unit)? = null
+        onSuccess: ((BookVolumes) -> Unit)? = null
     ) {
         currentQuery?.apply {
             val observable = VolumeService.getVolumes(this, currentPage * maxResults, maxResults)
@@ -32,7 +32,7 @@ object VolumeDataSource {
     fun getVolume(
         volumeId: String,
         onError: ((String?) -> Unit)? = null,
-        onSuccess: ((BookVolume?) -> Unit)? = null
+        onSuccess: ((BookVolume) -> Unit)? = null
     ) {
         val observable = VolumeService.getVolume(volumeId)
         ApiService.call(
@@ -45,7 +45,7 @@ object VolumeDataSource {
     fun searchVolumes(
         query: String,
         onError: ((String?) -> Unit)? = null,
-        onSuccess: ((BookVolumes?) -> Unit)? = null
+        onSuccess: ((BookVolumes) -> Unit)? = null
     ) {
         if (query.isNotEmpty()) {
             currentPage = 0
@@ -59,7 +59,7 @@ object VolumeDataSource {
 
     fun nextPage(
         onError: ((String?) -> Unit)? = null,
-        onSuccess: ((BookVolumes?) -> Unit)? = null
+        onSuccess: ((BookVolumes) -> Unit)? = null
     ) {
         currentPage++
         getVolumes(

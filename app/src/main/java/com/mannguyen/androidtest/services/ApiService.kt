@@ -9,12 +9,12 @@ object ApiService {
     @SuppressLint("CheckResult")
     fun <T> call(
         observable: Observable<Response<T>>?,
-        onSuccess: ((T?) -> Unit)? = null,
+        onSuccess: ((T) -> Unit)? = null,
         onError: ((String?) -> Unit)? = null
     ) {
         observable?.subscribe({
             if (it.isSuccessful) {
-                onSuccess?.invoke(it.body())
+                onSuccess?.invoke(it.body()!!)
             } else {
                 onError?.invoke(it.errorBody()?.string())
             }
