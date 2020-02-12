@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mannguyen.androidtest.R
 
 fun View.loadImage() {
@@ -29,6 +30,7 @@ fun ImageView.loadImage(context: Context, imageUrl: String?) {
     Glide.with(context)
         .load(imageUrl)
         .placeholder(context.createLoadingDrawable())
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .error(R.drawable.default_thumbnail)
         .into(this)
 }
