@@ -2,7 +2,7 @@ package com.mannguyen.androidtest.widgets
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import com.mannguyen.androidtest.utils.hideKeyboard
 
 class HasSubmitActionSearchView : SearchView {
