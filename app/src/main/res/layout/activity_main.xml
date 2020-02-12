@@ -1,66 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/horizontal_padding">
 
-    <com.mannguyen.androidtest.widgets.SearchingEditText
-        android:id="@+id/edtQuery"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/medium_padding"
+    <com.mannguyen.androidtest.widgets.HasScrolledToBottomActionRecyclerView
+        android:id="@+id/rvVolumes"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="@color/white"
-        android:hint="@string/edit_text_search_book_volume_hint"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:paddingStart="@dimen/horizontal_padding"
         android:paddingTop="@dimen/vertical_padding"
         android:paddingEnd="@dimen/horizontal_padding"
-        android:paddingBottom="@dimen/vertical_padding" />
+        android:paddingBottom="@dimen/vertical_padding"
+        android:textColor="@color/black"
+        android:textSize="@dimen/medium_text_size"
+        android:visibility="gone" />
 
-    <FrameLayout
+    <View
+        android:id="@+id/vCover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/vertical_margin">
+        android:background="@color/light_gray"
+        android:visibility="gone" />
 
-        <com.mannguyen.androidtest.widgets.HasScrolledToBottomActionRecyclerView
-            android:id="@+id/rvVolumes"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="@dimen/loading_progress_bar_size"
+        android:layout_height="@dimen/loading_progress_bar_size"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingStart="@dimen/horizontal_padding"
-            android:paddingTop="@dimen/vertical_padding"
-            android:paddingEnd="@dimen/horizontal_padding"
-            android:paddingBottom="@dimen/vertical_padding"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_text_size"
-            android:visibility="gone" />
-
-        <View
-            android:id="@+id/vCover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_gray"
-            android:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="@dimen/loading_progress_bar_size"
-            android:layout_height="@dimen/loading_progress_bar_size"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

@@ -2,16 +2,20 @@ package com.mannguyen.androidtest.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.mannguyen.androidtest.R
 import com.mannguyen.androidtest.adapters.VolumesAdapter
 import com.mannguyen.androidtest.constants.IntentKeys
 import com.mannguyen.androidtest.utils.hide
 import com.mannguyen.androidtest.utils.loadImage
+import com.mannguyen.androidtest.widgets.HasSubmitActionSearchView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var adapter: VolumesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +24,40 @@ class MainActivity : AppCompatActivity() {
         initialize()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val actionSearch = menu!!.findItem(R.id.actionSearch)
+        val searchView = actionSearch.actionView as HasSubmitActionSearchView
+        setUpSearchView(searchView)
+        return true
+    }
+
+    private fun setUpSearchView(searchView: HasSubmitActionSearchView) {
+        searchView.apply {
+            queryHint = getString(R.string.edit_text_search_book_volume_hint)
+            searchView.onSearchSubmit {
+                search(it)
+            }
+        }
+    }
+
+    private fun search(query: String) {
+        adapter.search(
+            query = query,
+            onStart = this@MainActivity::showLoading,
+            onCompleted = {
+                hideLoading()
+                hideError()
+            },
+            onError = { error ->
+                hideLoading()
+                showError(error.toString())
+            }
+        )
+    }
+
     private fun initialize() {
-        val adapter = VolumesAdapter(this).apply {
+        adapter = VolumesAdapter(this).apply {
             onLoadMoreError = {
                 toast(it.toString())
             }
@@ -36,21 +72,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         rvVolumes.adapter = adapter
-
-        edtQuery.onActionSearch { query ->
-            adapter.search(
-                query = query,
-                onStart = this@MainActivity::showLoading,
-                onCompleted = {
-                    hideLoading()
-                    hideError()
-                },
-                onError = {
-                    hideLoading()
-                    showError(it.toString())
-                }
-            )
-        }
 
         rvVolumes.onScrolledToBottom {
             adapter.loadMore()
